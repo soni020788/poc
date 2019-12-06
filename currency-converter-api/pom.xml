@@ -10,7 +10,7 @@
     <name>Java Currency Converter API</name>
 
     <properties>
-        <tomcat.version>7.0.56</tomcat.version>
+        <tomcat.version>8.0.23</tomcat.version>
         <jersey.version>2.17</jersey.version>
         <sisu.guice.version>3.2.6</sisu.guice.version>
         <jackson.version>2.5.0</jackson.version>
