@@ -1,0 +1,1 @@
+heroku war:deploy target\currency-converter-api-1.0.war --app currency-converter-rest-api

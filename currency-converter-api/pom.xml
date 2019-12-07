@@ -5,8 +5,8 @@
 
     <groupId>currency.converter.api</groupId>
     <artifactId>currency-converter-api</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <version>1.0</version>
+    <packaging>war</packaging>
     <name>Java Currency Converter API</name>
 
     <properties>
@@ -144,34 +144,28 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>appassembler-maven-plugin</artifactId>
-                    <version>2.0.0</version>
-                    <configuration>
-                        <assembleDirectory>target</assembleDirectory>
-                        <programs>
-                            <program>
-                                <mainClass>localserver.StartTomcat</mainClass>
-                                <name>webapp</name>
-                            </program>
-                        </programs>
-                    </configuration>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
                     <executions>
                         <execution>
                             <phase>package</phase>
                             <goals>
-                                <goal>assemble</goal>
+                                <goal>copy</goal>
                             </goals>
+                            <configuration>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>com.github.jsimone</groupId>
+                                        <artifactId>webapp-runner</artifactId>
+                                        <version>8.5.39</version>
+                                        <destFileName>webapp-runner.jar</destFileName>
+                                    </artifactItem>
+                                </artifactItems>
+                            </configuration>
                         </execution>
                     </executions>
-                </plugin>
-                <plugin>
-                    <groupId>com.heroku.sdk</groupId>
-                    <artifactId>heroku-maven-plugin</artifactId>
-                    <version>2.0.13</version>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
-
 </project>

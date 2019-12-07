@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Welcome in currency converter api !!!</title>
+    <title>Welcome in currency converter API !!!</title>
 </head>
 <body>
-
+<h2>Welcome in currency converter rest API !!!</h2>
 </body>
 </html>
