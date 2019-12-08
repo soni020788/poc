@@ -1,6 +1,7 @@
 package currency.converter.api.di;
 
 import com.google.inject.servlet.ServletModule;
+import filter.SessionFilter;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 import java.util.HashMap;
@@ -10,6 +11,7 @@ public class CurrencyConverterServletModule extends ServletModule {
     @Override
     protected void configureServlets() {
         bind(ServletContainer.class).asEagerSingleton();
+        filter("/*").through(SessionFilter.class);
         serve("/rest/*").with(ServletContainer.class, jerseyApplicationInitParams());
     }
 
