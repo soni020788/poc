@@ -65,6 +65,13 @@ public class CurrencyConverterResource {
         return onlyConvertedAmount ? Response.ok(currencyConverterDto.convertedAmount).build() : Response.ok(currencyConverterDto).build();
     }
 
+    @GET
+    @Path("/zoomable/sunburst/details")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getZoomableSunburstCurrencyData(@Context HttpServletRequest request) {
+        return Response.ok(currencyConverterService.getZoomableSunburstCurrency()).build();
+    }
+
     private boolean isStringInvalidNumber(String number) {
         String decimalPattern = "^[1-9]\\d*(\\.\\d+)?$";
         return !Pattern.matches(decimalPattern, number);

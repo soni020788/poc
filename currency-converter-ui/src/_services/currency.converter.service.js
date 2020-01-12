@@ -5,7 +5,8 @@ import React from "react";
 
 export const currencyConverterService = {
     getCurrencyDetails,
-    getConvertedCurrencyDetails
+    getConvertedCurrencyDetails,
+    getZoomableSunburstCurrencyData
 };
 
 const request = axios.create({
@@ -26,5 +27,11 @@ function getConvertedCurrencyDetails(source, target, amount) {
         } else {
             return Promise.reject(<Redirect to='/networkError'/>);
         }
+    })
+}
+
+function getZoomableSunburstCurrencyData() {
+    return request.get('/rest/currency/zoomable/sunburst/details').then().catch(function (error) {
+        console.log('getZoomableSunburstCurrencyData error: ' + error);
     })
 }

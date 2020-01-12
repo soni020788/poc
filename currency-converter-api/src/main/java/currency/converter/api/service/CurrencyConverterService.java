@@ -2,6 +2,7 @@ package currency.converter.api.service;
 
 import currency.converter.api.domain.CurrencyConverterDto;
 import currency.converter.api.domain.CurrencyRates;
+import currency.converter.api.domain.ZoomableSunburstDto;
 import currency.converter.api.resource.CurrencyExchangeApiClient;
 
 import javax.inject.Inject;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -30,5 +32,15 @@ public class CurrencyConverterService {
     public Map<String, BigDecimal> getCurrencyList() throws IOException {
         CurrencyRates currencyRates = currencyExchangeApiClient.getCurrencyRates(null);
         return currencyRates.rates;
+    }
+
+    public ZoomableSunburstDto getZoomableSunburstCurrency() {
+        try {
+            return new ZoomableSunburstDto(currencyExchangeApiClient.getCurrencyRates(null));
+        } catch (IOException e) {
+            Map<String, BigDecimal> currency = new HashMap<>();
+            currency.put("", new BigDecimal("0.0"));
+            return new ZoomableSunburstDto(new CurrencyRates(currency, "", ""));
+        }
     }
 }

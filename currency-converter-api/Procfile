@@ -1,1 +1,3 @@
+heroku plugins:install java
 heroku war:deploy target\currency-converter-api-1.0.war --app currency-converter-rest-api
+heroku ps:scale web=1

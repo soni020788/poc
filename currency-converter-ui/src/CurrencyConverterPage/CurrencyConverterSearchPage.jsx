@@ -1,6 +1,7 @@
 import React from "react";
 import {currencyConverterService} from "../_services/currency.converter.service";
 import CurrencyConverterDetailsPage from "../CurrencyConverterPage/CurrencyConverterDetailsPage"
+import CurrencyZoomableSunburst from "../CurrencyConverterPage/CurrencyZoomableSunburst"
 
 export default class CurrencyConverterSearchPage extends React.Component {
     constructor(props) {
@@ -12,7 +13,8 @@ export default class CurrencyConverterSearchPage extends React.Component {
             submit: false,
             loading: false,
             convertedCurrencyDetails: '',
-            error: ''
+            error: '',
+            zoomableSunburstCurrencyData: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handelSubmit = this.handelSubmit.bind(this);
@@ -20,6 +22,7 @@ export default class CurrencyConverterSearchPage extends React.Component {
 
     componentDidMount() {
         this.getCurrencyDetails();
+        this.getZoomableSunburstCurrencyData();
     }
 
     getCurrencyDetails() {
@@ -28,7 +31,17 @@ export default class CurrencyConverterSearchPage extends React.Component {
                 convertedCurrencyDetails: response.data
             })
         }).catch(function (error) {
-            console.log('Error' + error)
+            console.log('getCurrencyDetails Error' + error)
+        })
+    }
+
+    getZoomableSunburstCurrencyData() {
+        currencyConverterService.getZoomableSunburstCurrencyData().then(response => {
+            this.setState({
+                zoomableSunburstCurrencyData: response.data.children
+            })
+        }).catch(function (error) {
+            console.log('getZoomableSunburstCurrencyData Error' + error)
         })
     }
 
@@ -59,12 +72,20 @@ export default class CurrencyConverterSearchPage extends React.Component {
     }
 
     render() {
-        const {source, target, amount, submit, loading, error} = this.state;
+        const {source, target, amount, submit, loading, error, zoomableSunburstCurrencyData} = this.state;
         return (
             <div className="App">
                 <h2>
-                    Real Time Currency Converter Page
+                    Currency Converter Page
                 </h2>
+                <h6>
+                    Available Currencies and Rates
+                </h6>
+                {zoomableSunburstCurrencyData &&
+                <CurrencyZoomableSunburst data={zoomableSunburstCurrencyData}/>}
+                <h6>
+                    Real Time Currency Converter Page
+                </h6>
                 <div className={'form-group' + (submit && !source ? 'has-error' : '')}>
                     <label className="label info" htmlFor="source">Source Currency</label>
                     <input placeholder="Currency Source" type="text" name="source" value={source} required={true}
@@ -94,9 +115,10 @@ export default class CurrencyConverterSearchPage extends React.Component {
                     </button>
                 </div>
                 {error && <div className={'bg-danger'}>{error}</div>}
-                <br/>
                 {this.state.convertedCurrencyDetails &&
                 <CurrencyConverterDetailsPage currencyDetails={this.state.convertedCurrencyDetails}/>}
+                <h6>Developed by @HL
+                </h6>
             </div>
         )
     }
